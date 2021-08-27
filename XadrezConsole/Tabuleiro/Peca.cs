@@ -10,9 +10,9 @@
 
         public TabuleiroXadrez Tabuleiro { get; set; }
 
-        public Peca(Posicao posicao, TabuleiroXadrez tabuleiro, Cor cor)
+        public Peca(TabuleiroXadrez tabuleiro, Cor cor)
         {
-            this.Posicao = posicao;
+            this.Posicao = null;
             this.Tabuleiro = tabuleiro;
             this.Cor = cor;
             this.QuantidadeMovimentos = 0;
