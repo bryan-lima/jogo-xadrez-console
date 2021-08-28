@@ -11,13 +11,13 @@ namespace XadrezConsole
             {
                 for (int coluna = 0; coluna < tabuleiro.Colunas; coluna++)
                 {
-                    if (tabuleiro.peca(linha, coluna) == null)
+                    if (tabuleiro.Peca(linha, coluna) == null)
                     {
                         Console.Write("- ");
                     }
                     else
                     {
-                        Console.Write(tabuleiro.peca(linha, coluna) + " ");
+                        Console.Write(tabuleiro.Peca(linha, coluna) + " ");
                     }
                 }
 
