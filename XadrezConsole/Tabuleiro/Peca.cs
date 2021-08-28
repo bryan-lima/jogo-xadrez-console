@@ -17,5 +17,10 @@
             this.Cor = cor;
             this.QuantidadeMovimentos = 0;
         }
+
+        public void IncrementarQuantidadeMovimentos()
+        {
+            QuantidadeMovimentos++;
+        }
     }
 }
