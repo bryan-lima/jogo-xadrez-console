@@ -23,6 +23,24 @@
             QuantidadeMovimentos++;
         }
 
+        public bool ExisteMovimentosPossiveis()
+        {
+            bool[,] matrizMovimentosPossiveis = MovimentosPossiveis();
+
+            for (int linha = 0; linha < Tabuleiro.Linhas; linha++)
+            {
+                for (int coluna = 0; coluna < Tabuleiro.Colunas; coluna++)
+                {
+                    if (matrizMovimentosPossiveis[linha, coluna])
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
         public abstract bool[,] MovimentosPossiveis();
     }
 }
