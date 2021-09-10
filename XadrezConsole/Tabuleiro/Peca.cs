@@ -46,7 +46,7 @@
             return false;
         }
 
-        public bool PodeMoverPara(Posicao posicaoDestino)
+        public bool MovimentoPossivel(Posicao posicaoDestino)
         {
             return MovimentosPossiveis()[posicaoDestino.Linha, posicaoDestino.Coluna];
         }
