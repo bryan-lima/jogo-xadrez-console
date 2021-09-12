@@ -4,9 +4,11 @@ namespace Xadrez
 {
     class Rei : Peca
     {
-        public Rei(TabuleiroXadrez tabuleiro, Cor cor) : base(tabuleiro, cor)
-        {
+        private Partida Partida;
 
+        public Rei(TabuleiroXadrez tabuleiro, Cor cor, Partida partida) : base(tabuleiro, cor)
+        {
+            this.Partida = partida;
         }
 
         public override string ToString()
@@ -18,6 +20,16 @@ namespace Xadrez
         {
             Peca peca = Tabuleiro.Peca(posicao);
             return peca == null || peca.Cor != Cor;
+        }
+
+        private bool TesteTorraParaRoque(Posicao posicao)
+        {
+            Peca peca = Tabuleiro.Peca(posicao);
+            
+            return peca != null 
+                        && peca is Torre 
+                        && peca.Cor == Cor 
+                        && peca.QuantidadeMovimentos == 0;
         }
 
         public override bool[,] MovimentosPossiveis()
@@ -87,6 +99,40 @@ namespace Xadrez
             if (Tabuleiro.PosicaoValida(posicao) && PodeMover(posicao))
             {
                 matrizMovimentosPossiveis[posicao.Linha, posicao.Coluna] = true;
+            }
+            #endregion
+
+            #region Jogada Especial - Roque
+            if (QuantidadeMovimentos == 0 && !Partida.Xeque)
+            {
+                #region Jogada Especial - Roque Pequeno
+                Posicao posicaoTorreRoquePequeno = new Posicao(Posicao.Linha, Posicao.Coluna + 3);
+                if (TesteTorraParaRoque(posicaoTorreRoquePequeno))
+                {
+                    Posicao posicaoReiMais1 = new Posicao(Posicao.Linha, Posicao.Coluna + 1);
+                    Posicao posicaoReiMais2 = new Posicao(Posicao.Linha, Posicao.Coluna + 2);
+
+                    if (Tabuleiro.Peca(posicaoReiMais1) == null && Tabuleiro.Peca(posicaoReiMais2) == null)
+                    {
+                        matrizMovimentosPossiveis[Posicao.Linha, Posicao.Coluna + 2] = true;
+                    }
+                }
+                #endregion
+
+                #region Jogada Especial - Roque Grande
+                Posicao posicaoTorreRoqueGrande = new Posicao(Posicao.Linha, Posicao.Coluna - 4);
+                if (TesteTorraParaRoque(posicaoTorreRoqueGrande))
+                {
+                    Posicao posicaoReiMenos1 = new Posicao(Posicao.Linha, Posicao.Coluna - 1);
+                    Posicao posicaoReiMenos2 = new Posicao(Posicao.Linha, Posicao.Coluna - 2);
+                    Posicao posicaoReiMenos3 = new Posicao(Posicao.Linha, Posicao.Coluna - 3);
+
+                    if (Tabuleiro.Peca(posicaoReiMenos1) == null && Tabuleiro.Peca(posicaoReiMenos2) == null && Tabuleiro.Peca(posicaoReiMenos3) == null)
+                    {
+                        matrizMovimentosPossiveis[Posicao.Linha, Posicao.Coluna - 2] = true;
+                    }
+                }
+                #endregion
             }
             #endregion
 
